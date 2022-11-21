@@ -1,6 +1,7 @@
 import Motorcycle from '../Domains/Motorcycle';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotorcycleODM from '../Models/MotorcycleODM';
+import CustomizedError from '../Utils/CustomizedError';
 
 export default class MotorcycleService {
   private motorcycleODM: MotorcycleODM;
@@ -16,6 +17,12 @@ export default class MotorcycleService {
 
   public async create(data: IMotorcycle) {
     const motorcycle = await this.motorcycleODM.create(data);
+    return new Motorcycle(motorcycle);
+  }
+
+  public async findById(id: string) {
+    const motorcycle = await this.motorcycleODM.getById(id);
+    if (!motorcycle) throw new CustomizedError('Motorcycle not found', 404);
     return new Motorcycle(motorcycle);
   }
 }
