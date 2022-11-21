@@ -24,4 +24,11 @@ export default class CarService {
     if (!car) throw new CustomizedError('Car not found', 404);
     return new Car(car);
   }
+
+  public async update(id: string, data: ICar) {
+    const updatedCar = await this.carODM.update(id, data);
+    if (!updatedCar) throw new CustomizedError('Car not found', 404);
+    const car = await this.carODM.getById(id);
+    return new Car(car as ICar);
+  }
 }
