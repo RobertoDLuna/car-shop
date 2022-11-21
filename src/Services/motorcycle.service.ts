@@ -25,4 +25,10 @@ export default class MotorcycleService {
     if (!motorcycle) throw new CustomizedError('Motorcycle not found', 404);
     return new Motorcycle(motorcycle);
   }
+
+  public async update(id: string, data: IMotorcycle) {
+    const motorcycle = await this.motorcycleODM.update(id, data);
+    if (!motorcycle) throw new CustomizedError('Motorcycle not found', 404);
+    return new Motorcycle(motorcycle);
+  }
 }
