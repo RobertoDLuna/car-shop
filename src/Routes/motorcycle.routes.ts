@@ -3,4 +3,8 @@ import MotorcycleController from '../Controllers/motorcycle.controller';
 
 const motorRoute = Router();
 
-motorRoute.post('/motorcycles', () => new MotorcycleController(req, res, next).create());
+motorRoute.post('/motorcycles', (req, res, next) => new 
+MotorcycleController(req, res, next).create());
+
+motorRoute.get('/motorcycles', (req, res, next) => new
+MotorcycleController(req, res, next).showAll());
