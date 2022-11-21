@@ -8,3 +8,5 @@ MotorcycleController(req, res, next).create());
 
 motorRoute.get('/motorcycles', (req, res, next) => new
 MotorcycleController(req, res, next).showAll());
+
+export default motorRoute;
