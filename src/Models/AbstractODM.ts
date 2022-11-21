@@ -1,4 +1,5 @@
-import { Schema, models, model, Model } from 'mongoose';
+import { Schema, models, model, Model, isValidObjectId } from 'mongoose';
+import CustomizedError from '../Utils/CustomizedError';
 
 abstract class AbstractODM<T> {
   protected model: Model<T>;
@@ -17,6 +18,12 @@ abstract class AbstractODM<T> {
 
   public async getAll(): Promise<T[]> {
     return this.model.find();
+  }
+
+  public async getById(id: string): Promise<T | null> {
+    if (!isValidObjectId(id)) throw new CustomizedError('Invalid mongo id', 422);
+
+    return this.model.findById(id);
   }
 }
 
