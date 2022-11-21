@@ -1,4 +1,4 @@
-import { Schema, models, model, Model, isValidObjectId } from 'mongoose';
+import { Schema, models, model, Model, isValidObjectId, UpdateQuery } from 'mongoose';
 import CustomizedError from '../Utils/CustomizedError';
 
 abstract class AbstractODM<T> {
@@ -24,6 +24,16 @@ abstract class AbstractODM<T> {
     if (!isValidObjectId(id)) throw new CustomizedError('Invalid mongo id', 422);
 
     return this.model.findById(id);
+  }
+
+  public async update(_id: string, obj: Partial<T>): Promise<T | null> {
+    if (!isValidObjectId(_id)) throw new CustomizedError('Invalid mongo id', 422);
+
+    return this.model.findByIdAndUpdate(
+      { _id },
+      { ...obj } as UpdateQuery<T>,
+      { new: true },
+    );
   }
 }
 
